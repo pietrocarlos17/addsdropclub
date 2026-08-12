@@ -53,9 +53,113 @@
     .checkout-wrap { padding: 0 16px 32px; }
     .btn-checkout { display: block; width: 100%; padding: 16px; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: inherit; cursor: pointer; text-align: center; text-decoration: none; }
     .btn-continue { display: block; text-align: center; font-size: 12px; color: #767677; text-decoration: underline; margin-top: 12px; text-underline-offset: 2px; }
+
+    /* ── MENU DRAWER ── */
+    .menu-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.45);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .menu-overlay.open { opacity: 1; pointer-events: all; }
+    .menu-drawer {
+      position: fixed; top: 0; left: 0; bottom: 0;
+      width: 82%; max-width: 320px;
+      background: #fff; z-index: 201;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .menu-drawer.open { transform: translateX(0); }
+    .menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-logo { height: 32px; width: auto; display: block; }
+    .menu-close {
+      background: none; border: none; cursor: pointer; padding: 4px;
+      display: flex; align-items: center;
+    }
+    .menu-close svg { width: 20px; height: 20px; stroke: #000; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+    .menu-nav { flex: 1; padding: 8px 0; }
+    .menu-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 20px;
+      font-size: 14px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #000;
+      text-decoration: none; cursor: pointer;
+      border: none; background: none; width: 100%; text-align: left;
+      font-family: inherit;
+    }
+    .menu-item:active { background: #f8f8f8; }
+    .menu-arrow {
+      width: 18px; height: 18px; stroke: #000; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.25s ease; flex-shrink: 0;
+    }
+    .menu-arrow.open { transform: rotate(180deg); }
+    .menu-sub {
+      display: none; background: #fafafa;
+      border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-sub.open { display: block; }
+    .menu-sub a {
+      display: block; padding: 13px 20px 13px 32px;
+      font-size: 13px; font-weight: 400; color: #333;
+      text-decoration: none; letter-spacing: 0.3px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-sub a:last-child { border-bottom: none; }
+    .menu-sub a:active { background: #f0f0f0; }
+    .menu-divider { height: 1px; background: #e8e8e8; margin: 8px 20px; }
+    .menu-secondary .menu-item {
+      font-size: 13px; font-weight: 400; text-transform: none;
+      letter-spacing: 0; color: #555;
+    }
   </style>
 </head>
 <body>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<!-- MENU DRAWER -->
+<div class="menu-drawer" id="menuDrawer">
+  <div class="menu-header">
+    <img src="logo.jpg" alt="ADDS" class="menu-logo" />
+    <button class="menu-close" onclick="closeMenu()" aria-label="Close menu">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="menu-nav">
+    <a class="menu-item" href="home.html">Home</a>
+    <button class="menu-item" onclick="toggleWomen(this)">
+      Women
+      <svg class="menu-arrow" id="womenArrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="menu-sub" id="womenSub">
+      <a href="collection.html">Clothing</a>
+      <a href="women-shoes.html">Shoes</a>
+      <a href="women-accessories.html">Accessories</a>
+    </div>
+    <button class="menu-item" onclick="toggleMen(this)">
+      Men
+      <svg class="menu-arrow" id="menArrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="menu-sub" id="menSub">
+      <a href="men-clothing.html">Clothing</a>
+      <a href="men-shoes.html">Shoes</a>
+      <a href="men-accessories.html">Accessories</a>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-secondary">
+      <a class="menu-item" href="#">Order Tracker</a>
+      <a class="menu-item" href="#">Help</a>
+      <a class="menu-item" href="#">Exchange &amp; Returns</a>
+    </div>
+  </nav>
+</div>
 
 <div class="promo-bar">Free UK Delivery for New Collections</div>
 
@@ -183,5 +287,26 @@
 </script>
 <script src="cookie-consent.js"></script>
 <script src="footer.js"></script>
+<script>
+  function openMenu() {
+    document.getElementById('menuDrawer').classList.add('open');
+    document.getElementById('menuOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    document.getElementById('menuDrawer').classList.remove('open');
+    document.getElementById('menuOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleWomen() {
+    document.getElementById('womenSub').classList.toggle('open');
+    document.getElementById('womenArrow').classList.toggle('open');
+  }
+  function toggleMen() {
+    document.getElementById('menSub').classList.toggle('open');
+    document.getElementById('menArrow').classList.toggle('open');
+  }
+  document.querySelector('.nav-hamburger').addEventListener('click', openMenu);
+</script>
 </body>
 </html>
