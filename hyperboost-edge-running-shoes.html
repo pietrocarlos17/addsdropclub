@@ -103,7 +103,10 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       letter-spacing: 0.1px;
     }
 
-    .price-main { font-size: 18px; font-weight: 700; margin-bottom: 3px; }
+    .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 3px; }
+    .price-main { font-size: 18px; font-weight: 700; }
+    .price-orig { font-size: 14px; color: #888; text-decoration: line-through; }
+    .price-pct { font-size: 12px; font-weight: 700; color: #b00; }
 
     /* ── GALLERY ── */
     .gallery { margin-top: 16px; }
@@ -574,7 +577,11 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
 
   <h1 class="product-title">HyperBoost Edge Running Shoes</h1>
 
-  <div class="price-main">£119.00</div>
+  <div class="price-row">
+    <span class="price-main">£119.00</span>
+    <span class="price-orig">£170.00</span>
+    <span class="price-pct">-30%</span>
+  </div>
 </div>
 
 <!-- GALLERY -->
