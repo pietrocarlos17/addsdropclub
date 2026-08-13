@@ -43,7 +43,7 @@
   const banner = document.createElement('div');
   banner.id = 'cookie-banner';
   banner.innerHTML = `
-    <p>We use cookies to improve your experience, analyse site traffic and serve personalised content. Read our <a href="#">Cookie Policy</a> and <a href="#">Privacy Policy</a>.</p>
+    <p>We use cookies to improve your experience, analyse site traffic and serve personalised content. Read our <a href="/privacy-policy">Privacy Policy</a>.</p>
     <div id="cookie-banner-btns">
       <button class="cb-btn cb-accept" id="cb-accept">Accept All Cookies</button>
       <button class="cb-btn cb-reject" id="cb-reject">Reject Non-Essential</button>
@@ -59,6 +59,9 @@
     setTimeout(() => banner.remove(), 280);
   }
 
-  document.getElementById('cb-accept').addEventListener('click', () => dismiss('accepted'));
+  document.getElementById('cb-accept').addEventListener('click', () => {
+    dismiss('accepted');
+    window.__initPixels && window.__initPixels();
+  });
   document.getElementById('cb-reject').addEventListener('click', () => dismiss('rejected'));
 })();
