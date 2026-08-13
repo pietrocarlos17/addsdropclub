@@ -287,16 +287,6 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       75% { transform: translateX(6px); }
     }
 
-    /* ── TOAST ── */
-    .toast {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: #000; color: #fff; padding: 12px 20px;
-      font-size: 13px; font-weight: 600; letter-spacing: 0.3px;
-      opacity: 0; transition: opacity 0.25s, transform 0.25s;
-      pointer-events: none; z-index: 999; white-space: nowrap;
-    }
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
     /* ── SIZE ERROR ── */
     .size-error {
       font-size: 12px; color: #c0392b; margin-bottom: 10px;
@@ -578,9 +568,9 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   <h1 class="product-title">HyperBoost Edge Running Shoes</h1>
 
   <div class="price-row">
-    <span class="price-main">£119.00</span>
+    <span class="price-main">£109.00</span>
     <span class="price-orig">£170.00</span>
-    <span class="price-pct">-30%</span>
+    <span class="price-pct">-25%</span>
   </div>
 </div>
 
@@ -940,6 +930,18 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   });
 
   // ── ADD TO BAG ──
+  const colourKeyMap = {
+    'Core Black / Carbon / Carbon': 'black',
+    'Cloud White / Silver Metallic / Zero Metalic': 'white',
+    'Cloud White / Clear Pink': 'pink'
+  };
+  const ukToEu = {'3':36,'3.5':36,'4':37,'4.5':38,'5':38,'5.5':39,'6':39,'6.5':40,'7':41,'7.5':41,'8':42,'8.5':43};
+  const variantIds = {
+    black: {36:'60360788967758',37:'60360789000526',38:'60360789033294',39:'60360789066062',40:'60360789098830',41:'60360789131598',42:'60360789164366',43:'60360789197134',44:'60360789229902',45:'60360789262670'},
+    white: {36:'60360789557582',37:'60360789590350',38:'60360789623118',39:'60360789655886',40:'60360789688654',41:'60360789721422',42:'60360789754190',43:'60360789786958',44:'60360789819726',45:'60360789852494'},
+    pink:  {36:'60360790344014',37:'60360790376782',38:'60360790409550',39:'60360790442318',40:'60360790475086',41:'60360790507854',42:'60360790540622',43:'60360790573390',44:'60360790606158',45:'60360790638926'}
+  };
+
   function addToBag() {
     const colour = document.getElementById('colour-name').textContent;
     const sizeBtn = document.querySelector('.size-btn.active');
@@ -954,30 +956,24 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     }
     errEl.style.display = 'none';
 
-    if (typeof Cart !== 'undefined') {
-      Cart.add({
-        id: 'hyperboost-edge-' + colour + '-' + sizeBtn.textContent,
-        productId: 'hyperboost-edge',
-        name: 'HyperBoost Edge Running Shoes',
-        colour: colour,
-        size: sizeBtn.textContent,
-        price: 119.00,
-        image: colorData[colour].images[0]
-      });
-    }
+    const colourKey = colourKeyMap[colour] || 'black';
+    const eu = ukToEu[sizeBtn.textContent];
+    const variantId = eu ? variantIds[colourKey][eu] : undefined;
 
-    showToast('Added to bag ✓');
-  }
-
-  function showToast(msg) {
-    var t = document.getElementById('add-toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 2500);
+    Cart.add({
+      id: 'hyperboost-edge-' + colour + '-' + sizeBtn.textContent,
+      variantId: variantId,
+      productId: 'hyperboost-edge',
+      name: 'HyperBoost Edge Running Shoes',
+      colour: colour,
+      size: sizeBtn.textContent,
+      price: 109.00,
+      image: colorData[colour].images[0]
+    });
+    CartDrawer.open();
   }
 </script>
 
-<div class="toast" id="add-toast"></div>
 <script src="cart.js"></script>
 
 <script src="cookie-consent.js"></script>
