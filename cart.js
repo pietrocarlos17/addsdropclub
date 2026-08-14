@@ -19,6 +19,8 @@ const Cart = {
       items.push(Object.assign({}, item, { qty: 1 }));
     }
     this.save(items);
+    try { if (window.fbq) fbq('track', 'AddToCart', { value: item.price, currency: 'GBP', content_name: item.name, content_type: 'product' }); } catch(e) {}
+    try { if (window.ttq) ttq.track('AddToCart', { value: item.price, currency: 'GBP', content_name: item.name, content_type: 'product' }); } catch(e) {}
   },
   remove(id) {
     this.save(this.get().filter(i => i.id !== id));
@@ -176,6 +178,9 @@ const CartDrawer = {
     const items = Cart.get().filter(function(i) { return i.variantId; });
     if (!items.length) return;
     const parts = items.map(function(i) { return i.variantId + ':' + i.qty; });
+    const value = Cart.subtotal();
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: value, currency: 'GBP', num_items: Cart.count() }); } catch(e) {}
+    try { if (window.ttq) ttq.track('InitiateCheckout', { value: value, currency: 'GBP' }); } catch(e) {}
     window.location.href = 'https://atonastore.com/cart/' + parts.join(',');
   }
 };
