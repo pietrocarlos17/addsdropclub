@@ -1174,7 +1174,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     const thumbsEl = document.getElementById('gallery-thumbs');
     thumbsEl.innerHTML = currentImages.map((src, i) => {
       const inner = src
-        ? '<img src="' + src + '" alt="' + colour + ' ' + (i + 1) + '">'
+        ? '<img loading="lazy" src="' + src + '" alt="' + colour + ' ' + (i + 1) + '">'
         : '<div class="gallery-thumb-placeholder" style="background:' + data.bg + ';"></div>';
       return '<div class="gallery-thumb' + (i === 0 ? ' active' : '') + '" data-index="' + i + '" onclick="selectThumb(this)">' + inner + '</div>';
     }).join('');
