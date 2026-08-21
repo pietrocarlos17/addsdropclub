@@ -991,6 +991,12 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   })();
 
   // Menu drawer
+  // Block all navigation from the menu on this LP
+  document.getElementById('menuDrawer').addEventListener('click', function(e) {
+    var a = e.target.closest('a');
+    if (a) { e.preventDefault(); closeMenu(); }
+  });
+
   function openMenu() {
     document.getElementById('menuDrawer').classList.add('open');
     document.getElementById('menuOverlay').classList.add('open');
