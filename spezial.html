@@ -191,6 +191,47 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       cursor: pointer; white-space: nowrap;
     }
     .sticky-bar-btn:active { background: #e8e8e8; }
+
+    /* Swatch grid with label */
+    #swatch-row { display: grid; grid-template-columns: repeat(4, 38px); gap: 10px; margin-bottom: 18px; }
+    .swatch-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+    .swatch-wrap .swatch-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #888; text-align: center; line-height: 1.2; max-width: 38px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .swatch-wrap .swatch-gender { font-size: 8px; font-weight: 700; background: #000; color: #fff; padding: 1px 4px; letter-spacing: 0.5px; }
+
+    /* Exclusive badge */
+    .exclusive-tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: #000; color: #fff; padding: 3px 10px; margin-bottom: 10px; }
+
+    /* Viewers */
+    .viewers { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; margin-bottom: 14px; }
+    .viewers-dot { width: 7px; height: 7px; border-radius: 50%; background: #2a9a2a; flex-shrink: 0; }
+
+    /* Free gift */
+    .free-gift { display: flex; gap: 12px; align-items: flex-start; background: #f7f7f7; padding: 13px 12px; margin-bottom: 14px; border-left: 3px solid #000; }
+    .fg-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .fg-badge { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: #000; color: #fff; padding: 2px 7px; margin-bottom: 4px; }
+    .fg-text { font-size: 12px; color: #444; line-height: 1.5; }
+
+    /* Gallery image fade transition */
+    #main-img { transition: opacity .2s ease; }
+
+    /* Add to bag tick */
+    .add-btn.ticked { background: #2a7a2a !important; }
+
+    /* Size guide modal */
+    #sg-modal { display: none; position: fixed; inset: 0; z-index: 1000; }
+    #sg-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); }
+    #sg-panel { position: absolute; bottom: 0; left: 0; right: 0; background: #fff; padding: 24px 20px 32px; max-height: 80vh; overflow-y: auto; }
+    #sg-modal.open { display: block; }
+    .sg-title { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .sg-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; line-height: 1; color: #000; }
+    .sg-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 12px; }
+    .sg-table th { background: #000; color: #fff; padding: 8px; text-align: left; font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; }
+    .sg-table td { padding: 8px; border-bottom: 1px solid #e8e8e8; }
+    .sg-table tr:last-child td { border-bottom: none; }
+    .sg-note { font-size: 11px; color: #777; line-height: 1.5; }
+
+    /* Padding to avoid sticky bar overlap */
+    .product-info { padding-bottom: 90px; }
   </style>
 </head>
 <body>
@@ -215,12 +256,12 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       alt="Handball Spezial">
   </div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Adidas Originals · Heritage Collection</p>
-    <h1 class="hero-title">Handball<br>Spezial.</h1>
-    <button class="hero-btn" onclick="scrollToSize()">Get Your Pair — £95.00</button>
+    <p class="hero-eyebrow">Limited Drop · Not Widely Available</p>
+    <h1 class="hero-title">The One That<br>Started It All.</h1>
+    <button class="hero-btn" onclick="scrollToSize()">Claim Your Pair — £95.00</button>
     <div class="hero-proof">
       <span class="hero-stars">★★★★★</span>
-      <span>4.8 · 31 Reviews · Free UK Delivery</span>
+      <span>4.8 · 31 reviews · Free UK delivery</span>
     </div>
   </div>
 </section>
@@ -245,22 +286,42 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   <div class="product-info">
     <h2 class="product-name" id="product-name">Handball Spezial</h2>
     <p class="product-ref" id="product-ref">Suede Upper · Ref: KJ2688</p>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;margin-top:4px;">
+      <span style="color:#b8860b;font-size:13px;letter-spacing:1px;">★★★★★</span>
+      <span style="font-size:11px;color:#555;">4.8 · 31 reviews</span>
+      <span style="font-size:11px;color:#ccc;">·</span>
+      <span style="font-size:11px;color:#555;">Free delivery</span>
+    </div>
+    <div class="viewers">
+      <span class="viewers-dot"></span>
+      <span id="viewers-text">12 people viewing this right now</span>
+    </div>
 
     <!-- Colour -->
-    <p class="field-label">Colour — <strong id="colour-name">Core Black / Core Black / Gum</strong></p>
+    <p class="field-label">Colour — <strong id="colour-name">Core Black / Cloud White / Gum</strong></p>
     <div class="swatch-row" id="swatch-row"></div>
 
-    <!-- Price -->
+    <!-- Exclusive badge + Price -->
+    <span class="exclusive-tag">Drop Exclusive Price</span>
     <div class="price-row">
       <span class="price-sale">£95.00</span>
       <span class="price-orig">£140.00</span>
       <span class="price-pct">-32%</span>
     </div>
 
+    <!-- Free gift -->
+    <div class="free-gift">
+      <span class="fg-icon">🧽</span>
+      <div>
+        <span class="fg-badge">Free Gift</span>
+        <p class="fg-text">Every order includes a <strong>suede cleaning kit</strong> — brush, eraser and protector spray. Keeps your Spezial looking new.</p>
+      </div>
+    </div>
+
     <!-- Scarcity -->
     <div class="scarcity">
       <span class="scarcity-dot"></span>
-      <span id="scarcity-text">Only 5 pairs left — selling fast</span>
+      <span id="scarcity-text">Only 5 pairs left in this colourway</span>
     </div>
 
     <!-- Delivery countdown -->
@@ -273,7 +334,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     <div id="size-section">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <p class="field-label" style="margin:0;" id="size-label">Size (UK)</p>
-        <span class="size-guide-link">Size Guide</span>
+        <span class="size-guide-link" onclick="document.getElementById('sg-modal').classList.add('open')">Size Guide</span>
       </div>
       <div class="size-grid" id="size-grid"></div>
     </div>
@@ -434,7 +495,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   <p class="section-eyebrow">Limited Stock · Exclusive Drop</p>
   <h2 class="section-title">6 Colourways.<br>All Selling Fast.</h2>
   <p class="final-cta-sub">Join 31 buyers who already claimed theirs.</p>
-  <button class="final-cta-btn" onclick="scrollToSize()">Get Your Pair — £95.00</button>
+  <button class="final-cta-btn" onclick="scrollToSize()">Claim Your Pair — £95.00</button>
   <p class="final-cta-proof">★★★★★ 4.8 · Free UK Delivery · 30-Day Returns</p>
 </section>
 
@@ -444,6 +505,44 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   </div>
   <p style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0.5px;">© 2025 Adidas. All rights reserved.</p>
 </footer>
+
+<!-- Size Guide Modal -->
+<div id="sg-modal">
+  <div id="sg-overlay" onclick="document.getElementById('sg-modal').classList.remove('open')"></div>
+  <div id="sg-panel">
+    <p class="sg-title">Size Guide <button class="sg-close" onclick="document.getElementById('sg-modal').classList.remove('open')">×</button></p>
+    <p style="font-size:11px;color:#888;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;">Men's / Unisex (IH9209 · HP7216 · KI6677 · KI6678 · KJ7422)</p>
+    <table class="sg-table">
+      <thead><tr><th>UK</th><th>EU</th><th>US (M)</th><th>CM</th></tr></thead>
+      <tbody>
+        <tr><td>4</td><td>37</td><td>4.5</td><td>23.0</td></tr>
+        <tr><td>5</td><td>38</td><td>5.5</td><td>24.0</td></tr>
+        <tr><td>5.5</td><td>39</td><td>6</td><td>24.5</td></tr>
+        <tr><td>6.5</td><td>40</td><td>7</td><td>25.5</td></tr>
+        <tr><td>7</td><td>41</td><td>7.5</td><td>26.0</td></tr>
+        <tr><td>8</td><td>42</td><td>8.5</td><td>26.5</td></tr>
+        <tr><td>9</td><td>43</td><td>9.5</td><td>27.5</td></tr>
+        <tr><td>9.5</td><td>44</td><td>10</td><td>28.0</td></tr>
+        <tr><td>10.5</td><td>45</td><td>11</td><td>29.0</td></tr>
+        <tr><td>11</td><td>46</td><td>11.5</td><td>29.5</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:#888;margin-bottom:12px;margin-top:16px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;">Women's (KJ2695 · KJ2693 · KJ2688)</p>
+    <table class="sg-table">
+      <thead><tr><th>UK</th><th>EU</th><th>US (W)</th><th>CM</th></tr></thead>
+      <tbody>
+        <tr><td>3.5</td><td>36</td><td>5</td><td>22.0</td></tr>
+        <tr><td>4</td><td>37</td><td>5.5</td><td>23.0</td></tr>
+        <tr><td>5</td><td>38</td><td>6.5</td><td>24.0</td></tr>
+        <tr><td>5.5</td><td>39</td><td>7</td><td>24.5</td></tr>
+        <tr><td>6.5</td><td>40</td><td>8</td><td>25.5</td></tr>
+        <tr><td>7</td><td>41</td><td>8.5</td><td>26.0</td></tr>
+        <tr><td>8</td><td>42</td><td>9.5</td><td>26.5</td></tr>
+      </tbody>
+    </table>
+    <p class="sg-note">The Handball Spezial fits true to size. If you're between sizes, we recommend going half a size up.</p>
+  </div>
+</div>
 
 <!-- Sticky buy bar -->
 <div class="sticky-bar" id="sticky-bar">
@@ -664,17 +763,36 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   let selectedSize = null;
 
   function buildSwatches() {
-    const row = document.getElementById('swatch-row');
+    var row = document.getElementById('swatch-row');
     row.innerHTML = '';
     colourOrder.forEach(function(k) {
-      const c = colours[k];
-      const d = document.createElement('div');
-      d.className = 'lp-swatch' + (k === currentKey ? ' active' : '');
-      d.id = 'swatch-' + k;
-      d.title = c.label;
-      d.style.backgroundImage = 'url("' + c.thumb + '")';
-      d.onclick = function() { selectColour(k); };
-      row.appendChild(d);
+      var c = colours[k];
+      var wrap = document.createElement('div');
+      wrap.className = 'swatch-wrap';
+      wrap.onclick = function() { selectColour(k); };
+
+      var sw = document.createElement('div');
+      sw.className = 'lp-swatch' + (k === currentKey ? ' active' : '');
+      sw.id = 'swatch-' + k;
+      sw.title = c.label;
+      sw.style.backgroundImage = 'url("' + c.thumb + '")';
+      sw.style.position = 'relative';
+
+      var badge = document.createElement('span');
+      badge.className = 'swatch-gender';
+      badge.textContent = c.gender === 'womens' ? 'W' : 'M';
+      badge.style.position = 'absolute';
+      badge.style.bottom = '0';
+      badge.style.right = '0';
+      sw.appendChild(badge);
+
+      var lbl = document.createElement('span');
+      lbl.className = 'swatch-label';
+      lbl.textContent = c.label.split(' / ')[0];
+
+      wrap.appendChild(sw);
+      wrap.appendChild(lbl);
+      row.appendChild(wrap);
     });
   }
 
@@ -713,7 +831,9 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
         selectedSize = sz;
         updateAddBtn();
         document.getElementById('scarcity-text').textContent =
-          'Only ' + sz.stock + ' pair' + (sz.stock === 1 ? '' : 's') + ' left in this size — order now';
+          sz.stock === 1
+            ? 'Last pair in UK ' + sz.uk + ' — no restocks planned'
+            : 'Only ' + sz.stock + ' pairs left in UK ' + sz.uk + ' — no restocks';
       };
       grid.appendChild(b);
     });
@@ -735,9 +855,15 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     var c = colours[key];
     document.getElementById('colour-name').textContent = c.label;
     document.getElementById('product-ref').textContent = 'Suede Upper · Ref: ' + c.ref;
-    document.getElementById('main-img').src = c.imgs[0];
+    // Fade gallery image
+    var mainImg = document.getElementById('main-img');
+    mainImg.style.opacity = '0';
+    setTimeout(function() {
+      mainImg.src = c.imgs[0];
+      mainImg.style.opacity = '1';
+    }, 200);
     document.getElementById('hero-img').src = c.imgs[0];
-    document.getElementById('scarcity-text').textContent = 'Only ' + c.stock + ' pairs left — selling fast';
+    document.getElementById('scarcity-text').textContent = 'Only ' + c.stock + ' pairs left in this colourway';
     document.querySelectorAll('.lp-swatch').forEach(function(s) { s.classList.remove('active'); });
     document.getElementById('swatch-' + key).classList.add('active');
     buildThumbs(key);
@@ -761,13 +887,35 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       price: 95.00,
       image: c.imgs[0] || null
     });
-    CartDrawer.open();
+    // Tick feedback before opening drawer
+    var btn = document.getElementById('add-btn');
+    var prev = btn.textContent;
+    btn.textContent = '✓ Added to Bag';
+    btn.classList.add('ticked');
+    setTimeout(function() {
+      btn.textContent = prev;
+      btn.classList.remove('ticked');
+      CartDrawer.open();
+    }, 700);
   }
 
   // Init
   buildSwatches();
   buildThumbs('kj2688');
   buildSizes('kj2688');
+
+  // Viewers count — randomised, fluctuates
+  (function() {
+    var el = document.getElementById('viewers-text');
+    if (!el) return;
+    var base = Math.floor(Math.random() * 8) + 7;
+    el.textContent = base + ' people viewing this right now';
+    setInterval(function() {
+      var delta = Math.random() < 0.5 ? 1 : -1;
+      base = Math.max(4, Math.min(22, base + delta));
+      el.textContent = base + ' people viewing this right now';
+    }, 8000);
+  })();
 
   // Sticky bar
   (function() {
