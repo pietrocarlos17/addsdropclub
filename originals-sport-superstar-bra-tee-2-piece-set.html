@@ -61,6 +61,20 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     .size-btn:hover { border-color: #000; }
     .size-btn.active { border-color: #000; background: #fff; font-weight: 700; }
     .size-btn.out { color: #bbb; cursor: default; text-decoration: line-through; }
+    .size-btn.error { border-color: #c0392b !important; background: #fff5f5 !important; }
+    .viewers-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #555; margin-bottom: 14px; }
+    .viewers-dot-g { width: 7px; height: 7px; border-radius: 50%; background: #2a9a2a; flex-shrink: 0; animation: pulse-g 2s infinite; }
+    @keyframes pulse-g { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+    .scarcity-txt { font-size: 12px; color: #c0392b; font-weight: 700; margin: 4px 0 12px; min-height: 16px; }
+    .payment-row { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #888; margin-bottom: 20px; flex-wrap: wrap; }
+    .payment-row svg { width: 13px; height: 13px; stroke: #888; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .payment-row .pay-dot { color: #ccc; }
+    .sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 300; background: #fff; border-top: 1px solid #e8e8e8; padding: 12px 16px; display: flex; align-items: center; gap: 12px; transform: translateY(100%); transition: transform .3s ease; box-shadow: 0 -4px 16px rgba(0,0,0,.08); }
+    .sticky-bar.visible { transform: translateY(0); }
+    .sticky-bar-info { flex: 1; min-width: 0; }
+    .sticky-bar-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sticky-bar-price { font-size: 14px; font-weight: 700; }
+    .sticky-bar-btn { background: #000; color: #fff; border: none; padding: 13px 20px; font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
     .size-guide { font-size: 13px; font-weight: 700; text-decoration: underline; color: #000; display: inline-block; margin-bottom: 16px; background: none; border: none; cursor: pointer; font-family: inherit; }
     .sg-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.45); }
     .sg-overlay.open { display: block; }
@@ -323,14 +337,11 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   </div>
   <div class="colour-name" id="colour-name">Black</div>
 
-  <!-- PROMO EXCLUSION -->
-  <p class="promo-excl">This product is excluded from all promotional discounts and offers.</p>
+  <!-- VIEWERS -->
+  <div class="viewers-row"><span class="viewers-dot-g"></span><span id="viewers-txt">14 people viewing this right now</span></div>
 
   <!-- SIZES -->
   <div class="sizes-title">Sizes</div>
-  <div class="size-tabs">
-    <button class="size-tab active" onclick="switchTab(this)">Standard</button>
-  </div>
   <div class="size-grid">
     <button class="size-btn" onclick="selectSize(this)">2XS</button>
     <button class="size-btn" onclick="selectSize(this)">XS</button>
@@ -340,6 +351,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     <button class="size-btn" onclick="selectSize(this)">XL</button>
     <button class="size-btn" onclick="selectSize(this)">2XL</button>
   </div>
+  <p class="scarcity-txt" id="scarcity-txt"></p>
   <button class="size-guide" onclick="document.getElementById('sg').classList.add('open')">Size guide</button>
   <div class="true-to-size">
     <span class="true-to-size-icon">ⓘ</span>
@@ -349,6 +361,16 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   <!-- SHOP CTA -->
   <p class="size-error" id="size-error">Please select a size</p>
   <button class="btn-add-bag" id="btn-add-bag" onclick="addToBag()">Add to Bag</button>
+
+  <!-- PAYMENT ICONS -->
+  <div class="payment-row">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    <span>Secure Checkout</span>
+    <span class="pay-dot">·</span><span>Visa</span>
+    <span class="pay-dot">·</span><span>Mastercard</span>
+    <span class="pay-dot">·</span><span>PayPal</span>
+    <span class="pay-dot">·</span><span>Apple Pay</span>
+  </div>
 
   <!-- BENEFITS -->
   <ul class="benefits">
@@ -704,10 +726,12 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     if (!sizeBtn) {
       errEl.style.display = 'block';
       btn.classList.add('shake');
+      document.querySelectorAll('.size-btn:not(.out)').forEach(b => b.classList.add('error'));
       setTimeout(function() { btn.classList.remove('shake'); }, 350);
       return;
     }
     errEl.style.display = 'none';
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('error'));
     const variantId = variants[colour] && variants[colour][sizeBtn.textContent];
     if (variantId) {
       Cart.add({
@@ -766,10 +790,19 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     btn.classList.add('active');
   }
 
+  const sizeStock = { '2XS': 2, 'XS': 3, 'S': 5, 'M': 6, 'L': 4, 'XL': 2, '2XL': 1 };
+
   function selectSize(btn) {
     if (btn.classList.contains('out')) return;
-    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.size-btn').forEach(b => { b.classList.remove('active', 'error'); });
     btn.classList.add('active');
+    document.getElementById('size-error').style.display = 'none';
+    const sz = btn.textContent.trim();
+    const stock = sizeStock[sz] || 5;
+    const el = document.getElementById('scarcity-txt');
+    if (stock <= 1) el.textContent = 'Last pair available!';
+    else if (stock <= 3) el.textContent = 'Only ' + stock + ' left in stock';
+    else el.textContent = '';
   }
 
   document.getElementById('open-reviews')?.addEventListener('click', () => {
@@ -777,6 +810,15 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     if (btn && btn.getAttribute('aria-expanded') === 'false') { toggleAcc(btn); btn.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
 </script>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-info">
+    <div class="sticky-bar-name">Sport Superstar Bra Tee 2-Piece Set</div>
+    <div class="sticky-bar-price">£79.00</div>
+  </div>
+  <button class="sticky-bar-btn" onclick="addToBag()">Add to Bag</button>
+</div>
 
 <div class="toast" id="add-toast"></div>
 <script src="cart.js"></script>
@@ -803,6 +845,26 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     document.getElementById('menArrow').classList.toggle('open');
   }
   document.querySelector('.nav-hamburger').addEventListener('click', openMenu);
+
+  (function() {
+    var el = document.getElementById('viewers-txt');
+    var n = Math.floor(Math.random() * 9) + 8;
+    el.textContent = n + ' people viewing this right now';
+    setInterval(function() {
+      n = Math.max(4, Math.min(24, n + (Math.random() < 0.5 ? 1 : -1)));
+      el.textContent = n + ' people viewing this right now';
+    }, 9000);
+  })();
+
+  (function() {
+    var sticky = document.getElementById('sticky-bar');
+    var mainBtn = document.getElementById('btn-add-bag');
+    if (sticky && mainBtn && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
+        sticky.classList.toggle('visible', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(mainBtn);
+    }
+  })();
 </script>
 </body>
 </html>
