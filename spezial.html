@@ -778,14 +778,6 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       sw.style.backgroundImage = 'url("' + c.thumb + '")';
       sw.style.position = 'relative';
 
-      var badge = document.createElement('span');
-      badge.className = 'swatch-gender';
-      badge.textContent = c.gender === 'womens' ? 'W' : 'M';
-      badge.style.position = 'absolute';
-      badge.style.bottom = '0';
-      badge.style.right = '0';
-      sw.appendChild(badge);
-
       var lbl = document.createElement('span');
       lbl.className = 'swatch-label';
       lbl.textContent = c.label.split(' / ')[0];
