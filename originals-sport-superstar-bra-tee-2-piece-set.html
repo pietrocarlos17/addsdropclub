@@ -104,6 +104,14 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     .btn-add-bag { display: block; width: 100%; padding: 16px; background: #000; color: #fff; border: none; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-family: inherit; cursor: pointer; margin-bottom: 12px; }
     .btn-add-bag:active { opacity: 0.85; }
     .btn-add-bag.shake { animation: shake 0.3s ease; }
+    .btn-buy-now {
+      display: block; width: 100%; padding: 16px;
+      background: #fff; color: #000; border: 2px solid #000;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; font-family: inherit;
+      cursor: pointer; margin-bottom: 12px;
+    }
+    .btn-buy-now:active { opacity: 0.75; }
     @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: #000; color: #fff; padding: 12px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; opacity: 0; transition: opacity 0.25s, transform 0.25s; pointer-events: none; z-index: 999; white-space: nowrap; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -745,6 +753,29 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
         image: currentImages[0] || null
       });
       CartDrawer.open();
+    }
+  }
+
+
+  function buyNow() {
+    const colour = document.getElementById('colour-name').textContent;
+    const sizeBtn = document.querySelector('.size-btn.active');
+    const errEl = document.getElementById('size-error');
+    const btn = document.getElementById('btn-add-bag');
+    if (!sizeBtn) {
+      errEl.style.display = 'block';
+      btn.classList.add('shake');
+      document.querySelectorAll('.size-btn:not(.out)').forEach(b => b.classList.add('error'));
+      setTimeout(function() { btn.classList.remove('shake'); }, 350);
+      return;
+    }
+    errEl.style.display = 'none';
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('error'));
+    const variantId = variants[colour] && variants[colour][sizeBtn.textContent];
+    if (variantId) {
+      try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: 79.00, currency: 'GBP', num_items: 1 }); } catch(e) {}
+      try { if (window.ttq) ttq.track('InitiateCheckout', { value: 79.00, currency: 'GBP' }); } catch(e) {}
+      window.location.href = 'https://atonastore.com/cart/' + variantId + ':1';
     }
   }
 
