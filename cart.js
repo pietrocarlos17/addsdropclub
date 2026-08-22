@@ -116,7 +116,7 @@ const CartDrawer = {
         <div class="cd-empty">
           <h2>Your bag is empty</h2>
           <p>Looks like you haven't added anything yet.</p>
-          <a href="collection.html" onclick="CartDrawer.close()">Shop Collections</a>
+          <a href="clothing" onclick="CartDrawer.close()">Shop Collections</a>
         </div>`;
       return;
     }
