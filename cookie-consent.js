@@ -1,5 +1,9 @@
 (function () {
-  if (localStorage.getItem('adds_cookie_consent')) return;
+  var consent = localStorage.getItem('adds_cookie_consent');
+  if (consent) {
+    if (consent === 'accepted') window.__initPixels && window.__initPixels();
+    return;
+  }
 
   const style = document.createElement('style');
   style.textContent = `
