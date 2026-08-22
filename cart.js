@@ -116,7 +116,7 @@ const CartDrawer = {
         <div class="cd-empty">
           <h2>Your bag is empty</h2>
           <p>Looks like you haven't added anything yet.</p>
-          <a href="clothing" onclick="CartDrawer.close()">Shop Collections</a>
+          <a href="collection.html" onclick="CartDrawer.close()">Shop Collections</a>
         </div>`;
       return;
     }
@@ -145,6 +145,7 @@ const CartDrawer = {
       <div class="cd-footer">
         <div class="cd-row"><span>Subtotal</span><span>${this.fmt(sub)}</span></div>
         <div class="cd-row"><span>Delivery</span><span class="cd-delivery">Free</span></div>
+        <div class="cd-row"><span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#2a7a4b;font-weight:600;">🧽 Suede Cleaning Kit</span><span style="font-size:11px;color:#2a7a4b;font-weight:700;">Free</span></div>
         <div class="cd-row total"><span>Total</span><span>${this.fmt(sub)}</span></div>
         <a class="cd-checkout" href="#" onclick="CartDrawer.checkout(); return false;">Proceed to Checkout →</a>
       </div>`;
