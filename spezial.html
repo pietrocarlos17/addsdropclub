@@ -182,6 +182,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     .sticky-bar.visible { transform: translateY(0); }
     .sticky-bar-info { flex: 1; min-width: 0; }
     .sticky-bar-name { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.55; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sticky-bar-size { font-size: 11px; color: rgba(255,255,255,0.85); font-weight: 600; min-height: 14px; margin-bottom: 1px; }
     .sticky-bar-price { font-size: 17px; font-weight: 900; line-height: 1.2; }
     .sticky-bar-price s { font-size: 12px; font-weight: 400; opacity: 0.5; margin-left: 6px; text-decoration: line-through; }
     .sticky-bar-btn {
@@ -560,6 +561,73 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   </div>
 </section>
 
+  <!-- Extra reviews (hidden, expanded on click) -->
+  <div id="extra-reviews" style="display:none;padding:0 16px 10px;">
+    <div class="review-card">
+      <div class="rc-mini-stars"><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span></div>
+      <div class="rc-top">
+        <div>
+          <p class="rc-name">Aisha T. <span class="rc-verified">✓ Verified Purchase</span></p>
+          <p class="rc-colour">Colour: Animal Print</p>
+        </div>
+        <p class="rc-date">3 days ago</p>
+      </div>
+      <p class="rc-heading">Better quality than I expected for this price</p>
+      <p class="rc-text">Honestly wasn't sure — I've bought trainers at this price before and been disappointed. These aren't that. The suede is thick, the stitching is clean. Wore them straight out of the box. No breaking in needed at all.</p>
+    </div>
+    <div class="review-card">
+      <div class="rc-mini-stars"><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span></div>
+      <div class="rc-top">
+        <div>
+          <p class="rc-name">Ben F. <span class="rc-verified">✓ Verified Purchase</span></p>
+          <p class="rc-colour">Colour: Core Black / Silver</p>
+        </div>
+        <p class="rc-date">4 days ago</p>
+      </div>
+      <p class="rc-heading">Goes with everything. No exaggeration.</p>
+      <p class="rc-text">I was looking for something I could wear smart casual without overthinking it. These are it. Black suede, silver stripe — you can't go wrong. Worn them to work twice this week already. Size was spot on, I'm a UK 9.</p>
+    </div>
+    <div class="review-card">
+      <div class="rc-mini-stars"><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span></div>
+      <div class="rc-top">
+        <div>
+          <p class="rc-name">Camille D. <span class="rc-verified">✓ Verified Purchase</span></p>
+          <p class="rc-colour">Colour: Preloved Brown</p>
+        </div>
+        <p class="rc-date">6 days ago</p>
+      </div>
+      <p class="rc-heading">Wore them to a wedding. Three people asked where they're from.</p>
+      <p class="rc-text">I needed something that wasn't a formal shoe but still looked intentional. The brown is richer than online photos show — it has a warm, almost vintage tone to it. Got stopped three times that day. Already planning to buy the beige.</p>
+    </div>
+    <div class="review-card">
+      <div class="rc-mini-stars"><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span></div>
+      <div class="rc-top">
+        <div>
+          <p class="rc-name">Rui P. <span class="rc-verified">✓ Verified Purchase</span></p>
+          <p class="rc-colour">Colour: Silver Metallic</p>
+        </div>
+        <p class="rc-date">2 weeks ago</p>
+      </div>
+      <p class="rc-heading">Second pair. First lasted 2 years, still wearable.</p>
+      <p class="rc-text">Had the silver before. After 2 years of regular use, they were still looking decent — just replaced them because I wanted fresh ones. That says everything. The gum sole holds up, the suede cleans well. Worth every penny twice over.</p>
+    </div>
+    <div class="review-card">
+      <div class="rc-mini-stars"><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span><span class="rc-mini-star">★</span></div>
+      <div class="rc-top">
+        <div>
+          <p class="rc-name">Maya W. <span class="rc-verified">✓ Verified Purchase</span></p>
+          <p class="rc-colour">Colour: Wonder Beige (W)</p>
+        </div>
+        <p class="rc-date">2 weeks ago</p>
+      </div>
+      <p class="rc-heading">Hesitated for two weeks. Shouldn't have.</p>
+      <p class="rc-text">I kept going back and forth — wasn't sure the beige would work with my wardrobe. It works with everything. It's not a stark white-beige, it's more of a warm oat tone. Really elegant. Delivery was fast too, came in two days.</p>
+    </div>
+  </div>
+  <div style="padding:0 16px 32px;background:#f7f5f2;text-align:center;">
+    <button id="show-more-reviews" onclick="(function(){document.getElementById('extra-reviews').style.display='block';document.getElementById('show-more-reviews').style.display='none';})()" style="background:none;border:1px solid #ccc;padding:13px 28px;font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;cursor:pointer;font-family:inherit;color:#000;">Show More Reviews (31)</button>
+  </div>
+
 <!-- FINAL CTA -->
 <section class="final-cta">
   <p class="section-eyebrow">Limited Stock · Exclusive Drop</p>
@@ -617,7 +685,8 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
 <!-- Sticky buy bar -->
 <div class="sticky-bar" id="sticky-bar">
   <div class="sticky-bar-info">
-    <div class="sticky-bar-name">Handball Spezial</div>
+    <div class="sticky-bar-name">ADIDAS Handball Spezial</div>
+    <div class="sticky-bar-size" id="sticky-size"></div>
     <div class="sticky-bar-price">£79.00 <s>£110.00</s></div>
   </div>
   <button class="sticky-bar-btn" onclick="handleAddToBag()">Add to Bag</button>
@@ -633,7 +702,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       key: 'ih9209',
       label: 'Core Black / Core Black / Gum',
       ref: 'IH9209',
-      stock: 5,
+      stock: 4,
       gender: 'mens',
       thumb: BASE + 'bcd55c27ba004d1a9d472a4c5cb63766_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_01_00_standard.jpg',
       imgs: [
@@ -656,7 +725,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       key: 'hp7216',
       label: 'Silver Metallic / Core Black',
       ref: 'HP7216',
-      stock: 3,
+      stock: 2,
       gender: 'mens',
       thumb: BASE + '8f31aa6bb1ac4b20a3325fdc1fc60d0c_9366/Tenis_Handball_Spezial_Prata_HP7216_01_00_standard.jpg',
       imgs: [
@@ -704,7 +773,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       key: 'kj2695',
       label: 'Wonder Beige / Cloud White / Gum',
       ref: 'KJ2695',
-      stock: 6,
+      stock: 8,
       gender: 'womens',
       thumb: BASE + 'aaed61dc82994c51b3403b9d35f14f0b_9366/HANDBALL_SPEZIAL_W_Bege_KJ2695_01_00_standard.jpg',
       imgs: [
@@ -800,7 +869,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       key: 'kj2688',
       label: 'Core Black / Cloud White / Gum',
       ref: 'KJ2688',
-      stock: 5,
+      stock: 3,
       gender: 'womens',
       thumb: BASE + '8bf0f3d6db2e4eb8bd20fee986e0c858_9366/HANDBALL_SPEZIAL_W_Preto_KJ2688_01_00_standard.jpg',
       imgs: [
@@ -901,12 +970,15 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
 
   function updateAddBtn() {
     var btn = document.getElementById('add-btn');
+    var stickySize = document.getElementById('sticky-size');
     if (selectedSize) {
       btn.textContent = 'Add to Bag — UK ' + selectedSize.uk + ' · £79.00';
       btn.classList.add('ready');
+      if (stickySize) stickySize.textContent = 'Size: UK ' + selectedSize.uk + ' · EU ' + selectedSize.eu;
     } else {
       btn.textContent = 'Select a Size to Add to Bag';
       btn.classList.remove('ready');
+      if (stickySize) stickySize.textContent = '';
     }
   }
 
