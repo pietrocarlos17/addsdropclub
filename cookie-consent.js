@@ -1,18 +1,19 @@
 (function () {
-  var consent = localStorage.getItem('adds_cookie_consent');
-  if (consent) {
-    if (consent === 'accepted') window.__initPixels && window.__initPixels();
-    return;
-  }
+  // Pixels always fire immediately, regardless of consent
+  window.__initPixels && window.__initPixels();
+
+  // Don't show banner if already answered
+  if (localStorage.getItem('adds_cookie_consent')) return;
 
   const style = document.createElement('style');
   style.textContent = `
     #cookie-banner {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: #fff; border-top: 1px solid #e0e0e0;
-      padding: 16px 20px; z-index: 9999;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      padding: 10px 16px; z-index: 9999;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
       animation: slideUp .3s ease;
     }
     @keyframes slideUp {
@@ -20,20 +21,15 @@
       to   { transform: translateY(0); }
     }
     #cookie-banner p {
-      font-size: 12px; color: #444; line-height: 1.5;
-      margin-bottom: 12px;
+      font-size: 11px; color: #666; line-height: 1.4;
+      margin: 0; flex: 1; min-width: 180px;
     }
-    #cookie-banner p a {
-      color: #000; text-decoration: underline;
-    }
-    #cookie-banner-btns {
-      display: flex; gap: 8px; flex-wrap: wrap;
-    }
+    #cookie-banner p a { color: #000; text-decoration: underline; }
+    #cookie-banner-btns { display: flex; gap: 6px; flex-shrink: 0; }
     .cb-btn {
-      flex: 1; min-width: 120px;
-      padding: 11px 14px;
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.8px; text-transform: uppercase;
+      padding: 7px 14px;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.6px; text-transform: uppercase;
       border: none; cursor: pointer;
       font-family: inherit; white-space: nowrap;
     }
@@ -47,10 +43,10 @@
   const banner = document.createElement('div');
   banner.id = 'cookie-banner';
   banner.innerHTML = `
-    <p>We use cookies to improve your experience, analyse site traffic and serve personalised content. Read our <a href="/privacy-policy">Privacy Policy</a>.</p>
+    <p>We use cookies to personalise content and analyse traffic. <a href="/privacy-policy">Learn more</a>.</p>
     <div id="cookie-banner-btns">
-      <button class="cb-btn cb-accept" id="cb-accept">Accept All Cookies</button>
-      <button class="cb-btn cb-reject" id="cb-reject">Reject Non-Essential</button>
+      <button class="cb-btn cb-accept" id="cb-accept">Accept</button>
+      <button class="cb-btn cb-reject" id="cb-reject">Reject</button>
     </div>
   `;
   document.body.appendChild(banner);
@@ -63,9 +59,6 @@
     setTimeout(() => banner.remove(), 280);
   }
 
-  document.getElementById('cb-accept').addEventListener('click', () => {
-    dismiss('accepted');
-    window.__initPixels && window.__initPixels();
-  });
+  document.getElementById('cb-accept').addEventListener('click', () => dismiss('accepted'));
   document.getElementById('cb-reject').addEventListener('click', () => dismiss('rejected'));
 })();
