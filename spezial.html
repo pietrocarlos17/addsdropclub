@@ -715,6 +715,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Core Black / Core Black / Gum',
       ref: 'IH9209',
       stock: 4,
+      stocks: {36:3,37:2,38:1,39:2,40:1,41:2,42:3,43:2,44:1,45:2},
       gender: 'mens',
       thumb: BASE + 'bcd55c27ba004d1a9d472a4c5cb63766_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_01_00_standard.jpg',
       imgs: [
@@ -738,6 +739,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Silver Metallic / Core Black',
       ref: 'HP7216',
       stock: 2,
+      stocks: {36:1,37:2,38:1,39:1,40:2,41:1,42:1,43:2,44:1,45:2},
       gender: 'mens',
       thumb: BASE + '8f31aa6bb1ac4b20a3325fdc1fc60d0c_9366/Tenis_Handball_Spezial_Prata_HP7216_01_00_standard.jpg',
       imgs: [
@@ -761,6 +763,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Leopard Print / Magic Beige',
       ref: 'KI6678',
       stock: 4,
+      stocks: {36:4,37:3,38:2,39:2,40:3,41:1,42:2,43:3,44:2,45:3},
       gender: 'mens',
       thumb: BASE + 'a9d937f8ca3f4ee8b31dc466d4e8bb1b_9366/Tenis_Estampa_de_Leopardo_Handball_Spezial_Bege_KI6678_01_00_standard.jpg',
       imgs: [
@@ -786,6 +789,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Wonder Beige / Cloud White / Gum',
       ref: 'KJ2695',
       stock: 8,
+      stocks: {36:4,37:3,38:2,39:3,40:3,41:2,42:3,43:4,44:3,45:4},
       gender: 'womens',
       thumb: BASE + 'aaed61dc82994c51b3403b9d35f14f0b_9366/HANDBALL_SPEZIAL_W_Bege_KJ2695_01_00_standard.jpg',
       imgs: [
@@ -809,6 +813,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Preloved Brown / Cloud White / Gum',
       ref: 'KJ2693',
       stock: 4,
+      stocks: {36:3,37:2,38:3,39:1,40:2,41:1,42:3,43:2,44:3,45:2},
       gender: 'womens',
       thumb: BASE + '79a345a2486a4e9f900530c7f4ee0fcb_9366/HANDBALL_SPEZIAL_W_Marrom_KJ2693_01_00_standard.jpg',
       imgs: [
@@ -833,6 +838,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Wonder Beige / Core White / Gum',
       ref: 'KI6677',
       stock: 5,
+      stocks: {36:3,37:2,38:1,39:3,40:2,41:3,42:2,43:1,44:3,45:2},
       gender: 'mens',
       thumb: BASE + '51ab5093d281482490ef4703b2aeb725_9366/TENIS_HANDBALL_SPEZIAL_Bege_KI6677_01_00_standard.jpg',
       imgs: [
@@ -858,6 +864,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Preloved Brown / Core White / Gum',
       ref: 'KJ7422',
       stock: 4,
+      stocks: {36:2,37:3,38:1,39:2,40:1,41:3,42:2,43:1,44:2,45:3},
       gender: 'mens',
       thumb: BASE + '5a991b1210754ab2a045a86b4ff07fde_9366/TENIS_HANDBALL_SPEZIAL_Marrom_KJ7422_01_00_standard.jpg',
       imgs: [
@@ -882,6 +889,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       label: 'Core Black / Cloud White / Gum',
       ref: 'KJ2688',
       stock: 3,
+      stocks: {36:2,37:1,38:1,39:2,40:1,41:2,42:1,43:3,44:2,45:3},
       gender: 'womens',
       thumb: BASE + '8bf0f3d6db2e4eb8bd20fee986e0c858_9366/HANDBALL_SPEZIAL_W_Preto_KJ2688_01_00_standard.jpg',
       imgs: [
@@ -971,10 +979,11 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
         b.classList.add('selected');
         selectedSize = sz;
         updateAddBtn();
+        var sStock = c.stocks[sz.eu];
         document.getElementById('scarcity-text').textContent =
-          sz.stock === 1
+          sStock === 1
             ? 'Last pair in UK ' + sz.uk + ' — no restocks planned'
-            : 'Only ' + sz.stock + ' pairs left in UK ' + sz.uk + ' — no restocks';
+            : 'Only ' + sStock + ' pairs left in UK ' + sz.uk + ' — no restocks';
       };
       grid.appendChild(b);
     });
