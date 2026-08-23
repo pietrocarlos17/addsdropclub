@@ -710,30 +710,6 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   // NOTE: Replace VARIANT_* placeholders with real Shopify variant IDs from atonastore.com
   const BASE = 'https://assets.adidas.com/images/w_1000,f_auto,q_auto/';
   const colours = {
-    ih9209: {
-      key: 'ih9209',
-      label: 'Core Black / Core Black / Gum',
-      ref: 'IH9209',
-      stock: 4,
-      stocks: {36:3,37:2,38:1,39:2,40:1,41:2,42:3,43:2,44:1,45:2},
-      gender: 'mens',
-      thumb: BASE + 'bcd55c27ba004d1a9d472a4c5cb63766_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_01_00_standard.jpg',
-      imgs: [
-        BASE + 'bcd55c27ba004d1a9d472a4c5cb63766_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_01_00_standard.jpg',
-        BASE + 'bfdfa6b57b6f4f8fab6bff436999d8dc_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_02_standard_hover.jpg',
-        BASE + '8fd1b62ba234451ea8781b5010c0109b_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_03_standard.jpg',
-        BASE + '361422a4d6c34caf9887b309c4d1169b_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_04_standard.jpg',
-        BASE + '77e63bf7034442bbab92d94fd841e15e_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_05_standard.jpg',
-        BASE + '4da6747cb1f948c7a7e63f67ae04b96b_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_06_standard.jpg',
-        BASE + 'f5815f6e64ea4172aeaa567852fd4747_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_41_detail.jpg',
-        BASE + '7b1ee35e1e924d0d866f5e198fd4a35d_9366/TENIS_HANDBALL_SPEZIAL_Preto_IH9209_42_detail.jpg',
-      ],
-      variants: {
-        36:60501831450958, 37:60501831483726, 38:60501831516494, 39:60501831549262,
-        40:60501831582030, 41:60501831614798, 42:60501831647566,
-        43:60501831680334, 44:60501831713102, 45:60501831745870,
-      }
-    },
     hp7216: {
       key: 'hp7216',
       label: 'Silver Metallic / Core Black',
@@ -916,7 +892,7 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     {eu:42,uk:'8',stock:2},{eu:43,uk:'9',stock:2},{eu:44,uk:'9.5',stock:3},{eu:45,uk:'10.5',stock:2},
   ];
 
-  const colourOrder = ['kj2688','kj2693','kj2695','kj7422','ki6678','ki6677','hp7216','ih9209'];
+  const colourOrder = ['kj2688','kj2693','kj2695','kj7422','ki6678','ki6677','hp7216'];
   let currentKey = 'kj2688';
   let selectedSize = null;
 
