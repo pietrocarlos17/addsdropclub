@@ -182,7 +182,19 @@ const CartDrawer = {
     const value = Cart.subtotal();
     try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: value, currency: 'GBP', num_items: Cart.count() }); } catch(e) {}
     try { if (window.ttq) ttq.track('InitiateCheckout', { value: value, currency: 'GBP' }); } catch(e) {}
-    window.location.href = 'https://atonastore.com/cart/' + parts.join(',');
+
+    // Cross-domain FB attribution: pass _fbp, _fbc and fbclid to Shopify
+    var url = 'https://atonastore.com/cart/' + parts.join(',');
+    var params = [];
+    var cookies = document.cookie.split(';').reduce(function(acc, c) {
+      var p = c.trim().split('='); acc[p[0]] = p.slice(1).join('='); return acc;
+    }, {});
+    if (cookies['_fbp']) params.push('_fbp=' + encodeURIComponent(cookies['_fbp']));
+    if (cookies['_fbc']) params.push('_fbc=' + encodeURIComponent(cookies['_fbc']));
+    var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+    if (fbclid) params.push('fbclid=' + encodeURIComponent(fbclid));
+    if (params.length) url += '?' + params.join('&');
+    window.location.href = url;
   }
 };
 
