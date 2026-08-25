@@ -100,7 +100,7 @@ const CartDrawer = {
     document.body.appendChild(drawer);
   },
 
-  fmt(n) { return '£' + n.toFixed(2); },
+  fmt(n) { return (window.CART_CURRENCY || '£') + n.toFixed(2); },
 
   render() {
     const body = document.getElementById('cd-body');
