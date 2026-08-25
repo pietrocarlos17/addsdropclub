@@ -704,8 +704,8 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
   <button class="sticky-bar-btn" onclick="handleAddToBag()">Add to Bag</button>
 </div>
 
-<script>window.CART_CURRENCY = '$';</script>
 <script src="cart.js"></script>
+<script>CartDrawer.fmt = function(n) { return '$' + n.toFixed(2); };</script>
 <script>
   // ── COLOUR DATA ──
   // NOTE: Replace VARIANT_* placeholders with real Shopify variant IDs from atonastore.com
