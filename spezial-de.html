@@ -73,6 +73,8 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
       background-size: cover; background-position: center;
     }
     .lp-swatch.active { border-color: #000; }
+    .swatch-wrap.sold-out { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+    .lp-swatch.sold-out::after { content:''; position:absolute; inset:0; background:linear-gradient(to top right,transparent calc(50% - 1px),rgba(0,0,0,.55) 50%,transparent calc(50% + 1px)); }
     .stock-pill { font-size: 10px; font-weight: 700; color: #b00; border: 1px solid #b00; padding: 3px 8px; letter-spacing: 0.5px; text-transform: uppercase; }
 
     .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
@@ -916,7 +918,8 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     {eu:42,cm:'26.5',stock:2},{eu:43,cm:'27.5',stock:2},{eu:44,cm:'28',stock:3},{eu:45,cm:'29',stock:2},
   ];
 
-  const colourOrder = ['kj2688','kj2693','kj2695','kj7422','ki6678','ki6677','hp7216','ih9209'];
+  const colourOrder = ['kj2693','ih9209','ki6678','kj2688','kj2695','kj7422','ki6677','hp7216'];
+  const availableColours = ['kj2693','ih9209','ki6678'];
   let currentKey = 'kj2693';
   let selectedSize = null;
 
@@ -925,12 +928,13 @@ if (localStorage.getItem('adds_cookie_consent') === 'accepted') window.__initPix
     row.innerHTML = '';
     colourOrder.forEach(function(k) {
       var c = colours[k];
+      var available = availableColours.indexOf(k) !== -1;
       var wrap = document.createElement('div');
-      wrap.className = 'swatch-wrap';
-      wrap.onclick = function() { selectColour(k); };
+      wrap.className = 'swatch-wrap' + (available ? '' : ' sold-out');
+      if (available) wrap.onclick = function() { selectColour(k); };
 
       var sw = document.createElement('div');
-      sw.className = 'lp-swatch' + (k === currentKey ? ' active' : '');
+      sw.className = 'lp-swatch' + (k === currentKey ? ' active' : '') + (available ? '' : ' sold-out');
       sw.id = 'swatch-' + k;
       sw.title = c.label;
       sw.style.backgroundImage = 'url("' + c.thumb + '")';
